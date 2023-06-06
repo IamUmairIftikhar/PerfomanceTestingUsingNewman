@@ -1,0 +1,137 @@
+{
+	"info": {
+		"_postman_id": "9626439a-b823-4343-87ca-9ae09cb974e5",
+		"name": "APIS_PerformanceTesting",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27172845",
+		"_collection_link": "https://warped-satellite-453709.postman.co/workspace/Team-Workspace~b2b6ed29-9996-49fe-8765-4643c87a93ee/collection/27172845-9626439a-b823-4343-87ca-9ae09cb974e5?action=share&creator=27172845&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "checkout_API",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"the endpoint returns the expected status code\", () => {",
+							"    ",
+							"  const expectedStatusCode = 200;",
+							"  pm.response.to.have.status(expectedStatusCode);",
+							"}); ",
+							"",
+							"pm.test(\"Get the order number and set it as environment variable\", () => {",
+							"    var jsonData = JSON.parse(responseBody);",
+							"    postman.setGlobalVariable(\"orderNumber\", jsonData.data['orderNumber']);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0Njc2N2Y2ZTM5YzVlMDlhZmU2NDdmMyIsInVzZXJuYW1lIjoiZnlsaXZ1cWVAdHV0dWFwcC5iaWQiLCJleHAiOjE2ODk2ODI0NzksImlhdCI6MTY4NDQ5ODQ3OX0.sUwOEndH2PNTd_O6MT52KZ1HJ6UnwbQG0uMxoGn4wfk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"eventId\":\"6466251b59fcbcb7ba8b08d2\",\n   \"organizerId\":\"643eab599daa3f3d7b19b31b\",\n   \"attendees\":[\n      {\n         \"name\":\"Umair\",\n         \"paymentType\":\"Online\",\n         \"ticketId\":\"647d8a0664d418f20ca15ef8\",\n         \"qty\":1,\n         \"TicketName\":\"GA\",\n         \"price\":10,\n         \"ContactInfo\":{\n            \"firstName\":\"Umair\",\n            \"lastName\":\"Iftikhar\",\n            \"phone\":\"3214974545\",\n            \"email\":\"umair@gmail.com\"\n         },\n         \"OrganizerInfo\":{\n            \"textField\":{\n               \n            },\n            \"singleDropdown\":{\n               \n            },\n            \"multiDropdown\":{\n               \n            },\n            \"date\":{\n               \n            }\n         }\n      }\n   ],\n   \"addonData\":[\n      \n   ],\n   \"totalAmount\":10.815,\n   \"stripeFee\":0.315,\n   \"eventFee\":0.5,\n   \"subtotal\":10,\n   \"image\":\"https://thumbnail.staging.carnivalist.com/admin/file-1684416283439.png\",\n   \"eventName\":\"new event 4\",\n   \"currency\":\"USD\",\n   \"success_url\":\"http://localhost:5200/success\",\n   \"managerId\":\"64268ace94608814549b392f\",\n   \"committeeId\":\"\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://backend.staging.carnivalist.com/api/stripe/checkout/event",
+					"protocol": "https",
+					"host": [
+						"backend",
+						"staging",
+						"carnivalist",
+						"com"
+					],
+					"path": [
+						"api",
+						"stripe",
+						"checkout",
+						"event"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Stripe webhook",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"the endpoint returns the expected status code\", () => {",
+							"  ",
+							"  const expectedStatusCode = 200;",
+							"  pm.response.to.have.status(expectedStatusCode);",
+							"}); "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id\": \"evt_3N3bCuDkHRnpdKoB4k1hbX8g\",\n  \"object\": \"event\",\n  \"api_version\": \"2022-11-15\",\n  \"created\": 1683103121,\n  \"data\": {\n    \"object\": {\n      \"id\": \"pi_3N3bCuDkHRnpdKoB4xg8wsDE\",\n      \"object\": \"payment_intent\",\n      \"amount\": 2704,\n      \"amount_capturable\": 2704,\n      \"amount_details\": {\n        \"tip\": {\n        }\n      },\n      \"amount_received\": 0,\n      \"application\": null,\n      \"application_fee_amount\": null,\n      \"automatic_payment_methods\": null,\n      \"canceled_at\": null,\n      \"cancellation_reason\": null,\n      \"capture_method\": \"manual\",\n      \"client_secret\": \"pi_3N3bCuDkHRnpdKoB4xg8wsDE_secret_bg0j66JqKNgvf3NKKtYy1BBXy\",\n      \"confirmation_method\": \"automatic\",\n      \"created\": 1683103120,\n      \"currency\": \"usd\",\n      \"customer\": \"cus_NpFhxgkuYcS3tX\",\n      \"description\": \"Carnivalist Event Ticket Sales for BP-wcw-1000\",\n      \"invoice\": null,\n      \"last_payment_error\": null,\n      \"latest_charge\": \"ch_3N3bCuDkHRnpdKoB4OgVmhLN\",\n      \"livemode\": false,\n      \"metadata\": {\n        \"user\": \"64521c6989d0aa50bbbd99ed\",\n        \"paymentType\": \"event_ticket\",\n        \"orderNumber\": \"{{orderNumber}}\",\n        \"isTesting\" : true\n      },\n      \"next_action\": null,\n      \"on_behalf_of\": null,\n      \"payment_method\": \"pm_1N3bCtDkHRnpdKoBmo9PA5Ht\",\n      \"payment_method_options\": {\n        \"card\": {\n          \"installments\": null,\n          \"mandate_options\": null,\n          \"network\": null,\n          \"request_three_d_secure\": \"automatic\"\n        }\n      },\n      \"payment_method_types\": [\n        \"card\"\n      ],\n      \"processing\": null,\n      \"receipt_email\": null,\n      \"review\": null,\n      \"setup_future_usage\": null,\n      \"shipping\": null,\n      \"source\": null,\n      \"statement_descriptor\": null,\n      \"statement_descriptor_suffix\": null,\n      \"status\": \"requires_capture\",\n      \"transfer_data\": null,\n      \"transfer_group\": null\n    }\n  },\n  \"livemode\": false,\n  \"pending_webhooks\": 1,\n  \"request\": {\n    \"id\": \"req_9w3xngUT0vftW6\",\n    \"idempotency_key\": \"fbe77cf8-6009-4ca8-b482-081d852f2467\"\n  },\n  \"type\": \"payment_intent.amount_capturable_updated\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://backend.staging.carnivalist.com/api/stripe/events/webhook?",
+					"protocol": "https",
+					"host": [
+						"backend",
+						"staging",
+						"carnivalist",
+						"com"
+					],
+					"path": [
+						"api",
+						"stripe",
+						"events",
+						"webhook"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
